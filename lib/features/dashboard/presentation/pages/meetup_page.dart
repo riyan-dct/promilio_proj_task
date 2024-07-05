@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:promilio_proj/features/login/presentation/theme/login_theme.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'description_page.dart';
@@ -46,53 +47,59 @@ class _MeetupPageState extends State<MeetupPage> {
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                CarouselSlider(
-                  carouselController: carouselController,
-                  options: CarouselOptions(
-                    height: 500.0,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        carousalIndex = index;
-                      });
-                    },
-                  ),
-                  items: List.generate(
-                    assets.length,
-                    (index) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return Column(
-                            children: [
-                              Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 5.0),
-                                  child: Stack(
-                                    children: [
-                                      ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                          child: Image.asset(assets[index])),
-                                      const Align(
-                                          alignment: Alignment.bottomLeft,
-                                          child: Padding(
-                                            padding: EdgeInsets.all(20.0),
-                                            child: Text(
-                                              'Popular Meetups in India',
-                                              style: TextStyle(
-                                                fontSize: 16.0,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                          )),
-                                    ],
-                                  )),
-                            ],
-                          );
-                        },
-                      );
-                    },
+                Container(
+                  // color: Colors.red,
+                  child: CarouselSlider(
+                    carouselController: carouselController,
+                    options: CarouselOptions(
+                      // height: 500.0,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          carousalIndex = index;
+                        });
+                      },
+                    ),
+                    items: List.generate(
+                      assets.length,
+                      (index) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Column(
+                              children: [
+                                Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 5.0),
+                                    child: Stack(
+                                      children: [
+                                        ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                            child: Image.asset(assets[index])),
+                                        const Positioned(
+                                          bottom: 10,
+                                          child: Align(
+                                              alignment: Alignment.bottomLeft,
+                                              child: Padding(
+                                                padding: EdgeInsets.all(20.0),
+                                                child: Text(
+                                                  'Popular Meetups in India',
+                                                  style: TextStyle(
+                                                    fontSize: 16.0,
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                              )),
+                                        ),
+                                      ],
+                                    )),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
                 AnimatedSmoothIndicator(
@@ -105,8 +112,15 @@ class _MeetupPageState extends State<MeetupPage> {
 
             /// trending popular people
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(("Trending Popular People")),
+                const Text(
+                  "Trending Popular People",
+                  style: LoginTheme.boldSubTitleTheme,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -219,7 +233,6 @@ class _MeetupPageState extends State<MeetupPage> {
             ),
 
             /// Top Trending Meetups
-
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -240,6 +253,10 @@ class _MeetupPageState extends State<MeetupPage> {
                         padding: const EdgeInsets.all(12),
                         margin: const EdgeInsets.all(12),
                         color: Colors.red.withOpacity(0.5),
+                        child: const Text(
+                          "Click to Open Description Page",
+                          style: LoginTheme.boldTitleTheme,
+                        ),
                       ),
                     );
                   },

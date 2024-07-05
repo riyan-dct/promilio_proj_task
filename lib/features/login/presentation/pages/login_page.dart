@@ -107,136 +107,158 @@ class _LoginPageState extends State<LoginPage> {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              /// title
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  "Hi, Welcome Back!",
-                  style: LoginTheme.boldTitleTheme,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            /// title
+            const Align(
+              alignment: Alignment.center,
+              child: Text(
+                "Hi, Welcome Back!",
+                style: LoginTheme.boldTitleTheme,
+              ),
+            ),
+
+            /// auth form
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  /// username
+                  _LoginTextFields(
+                    title: "Please Sign in to continue",
+                    label: "Enter Email or Mob No.",
+                    bottomLabel: "Sign In With OTP",
+                    textEditingController: username,
+                    onTextChanged: (_) => valuesChagned(),
+                    textValidator: (value) => emailValidator(value),
+                  ),
+
+                  /// password
+                  _LoginTextFields(
+                    title: "Password",
+                    label: "Enter Password",
+                    textEditingController: password,
+                    bottomLabel: "Forget Passwotrd",
+                    showRememberMe: true,
+                    onTextChanged: (_) => valuesChagned(),
+                  ),
+                ],
+              ),
+            ),
+
+            /// signup button
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: const WidgetStatePropertyAll(Colors.teal),
+                shape: WidgetStatePropertyAll(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
                 ),
               ),
+              onPressed: enableSubmitBtn ? () => submitBtnClick() : null,
+              child: const Text(
+                "Submit",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
 
-              /// auth form
-              Form(
-                key: _formKey,
-                child: Column(
+            /// divider
+            Stack(
+              fit: StackFit.loose,
+              alignment: Alignment.center,
+              children: [
+                const Divider(),
+                Container(
+                    color: Theme.of(context).cardColor,
+                    padding: const EdgeInsets.all(4),
+                    child: const Text("OR")),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            // Spacer(),
+            /// social platforms
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                5,
+                (index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      'assets/images/google_logo.png',
+                      height: 30,
+                    ),
+                  );
+                },
+              ),
+            ),
+            const Spacer(),
+
+            /// bottom info
+            Column(
+              children: [
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    /// username
-                    _LoginTextFields(
-                      title: "Please Sign in to continue",
-                      label: "Enter Email or Mob No.",
-                      bottomLabel: "Sign In With OTP",
-                      textEditingController: username,
-                      onTextChanged: (_) => valuesChagned(),
-                      textValidator: (value) => emailValidator(value),
+                    Column(
+                      children: [
+                        Text("Business user?"),
+                        Text(
+                          "Login Here",
+                          style: LoginTheme.boldBottomLabelTheme,
+                        )
+                      ],
                     ),
-
-                    /// password
-                    _LoginTextFields(
-                      title: "Password",
-                      label: "Enter Password",
-                      textEditingController: password,
-                      bottomLabel: "Forget Passwotrd",
-                      showRememberMe: true,
-                      onTextChanged: (_) => valuesChagned(),
-                    ),
+                    Column(
+                      children: [
+                        Text("Don't have an account"),
+                        Text(
+                          "Signup",
+                          style: LoginTheme.boldBottomLabelTheme,
+                        )
+                      ],
+                    )
                   ],
                 ),
-              ),
-
-              /// signup button
-              ElevatedButton(
-                  onPressed: enableSubmitBtn ? () => submitBtnClick() : null,
-                  child: Text("Submit")),
-
-              /// divider
-              Stack(
-                fit: StackFit.loose,
-                alignment: Alignment.center,
-                children: [
-                  const Divider(),
-                  Container(
-                      color: Theme.of(context).cardColor,
-                      padding: const EdgeInsets.all(4),
-                      child: const Text("OR")),
-                ],
-              ),
-
-              /// social platforms
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  5,
-                  (index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.asset(
-                        'assets/images/google_logo.png',
-                        height: 30,
-                      ),
-                    );
-                  },
-                ),
-              ),
-
-              /// bottom info
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text.rich(
+                      textAlign: TextAlign.center,
+                      TextSpan(
+                        text: "\tBy continuing, you agree Promilo's\t",
                         children: [
-                          Text("Business user?"),
-                          Text(
-                            "Login Here",
-                            style: LoginTheme.boldBottomLabelTheme,
+                          TextSpan(
+                            text: "Terms of Use & Privavy Policy",
+                            style: LoginTheme.boldSubTitleTheme.copyWith(
+                              color: Colors.black,
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.blue,
+                            ),
                           )
                         ],
                       ),
-                      Column(
-                        children: [
-                          Text("Don't have an account"),
-                          Text(
-                            "Signup",
-                            style: LoginTheme.boldBottomLabelTheme,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text.rich(
-                        textAlign: TextAlign.center,
-                        TextSpan(
-                          text: "\tBy continuing, you agree Promilo's\t",
-                          children: [
-                            TextSpan(
-                              text: "Terms of Use & Privavy Policy",
-                              style: LoginTheme.boldSubTitleTheme.copyWith(
-                                color: Colors.black,
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors.blue,
-                              ),
-                            )
-                          ],
-                        ),
-                        style: LoginTheme.lightInfoText,
-                      )
-                    ],
-                  )
-                ],
-              )
-            ],
-          ),
+                      style: LoginTheme.lightInfoText,
+                    )
+                  ],
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
         ),
       ),
     );
@@ -247,8 +269,7 @@ typedef ValidatorChanged<T> = String? Function(T value);
 
 class _LoginTextFields extends StatefulWidget {
   const _LoginTextFields(
-      {super.key,
-      required this.title,
+      {required this.title,
       required this.label,
       required this.textEditingController,
       this.showRememberMe = false,
@@ -289,12 +310,18 @@ class _LoginTextFieldsState extends State<_LoginTextFields> {
           widget.title,
           style: LoginTheme.boldSubTitleTheme,
         ),
+        const SizedBox(
+          height: 10,
+        ),
         TextFormField(
           decoration: InputDecoration(
               label: Text(widget.label), border: const OutlineInputBorder()),
           controller: widget.textEditingController,
           onChanged: widget.onTextChanged,
           validator: widget.textValidator,
+        ),
+        const SizedBox(
+          height: 5,
         ),
         Row(children: [
           (widget.showRememberMe)
